@@ -48,25 +48,11 @@
 <script src="lib/backbone.js"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
 
-<script>
-	if (!localStorage.getItem("files")) {
-		localStorage.setItem("files", JSON.stringify([
-		    {"id": 1, "name": "File 1"},
-		    {"id": 2, "name": "File 2"},
-		    {"id": 2, "name": "File 2"},
-		    {"id": 3, "name": "File 3"},
-		    {"id": 4, "name": "File 4"},
-		    {"id": 5, "name": "File 5"},
-		    {"id": 6, "name": "File 6"}
-		]));
-	}
-	var App = {};
-</script>
-
+<script src="js/collection/data.js"></script>
 <script src="js/collection/file.js"></script>
 <script src="js/collection/files.js"></script>
 <script src="js/collection/rename.js"></script>
-<script src="js/collection/index.js"></script>
+<script src="js/collection/page.js"></script>
 
 </body>
 </html>
