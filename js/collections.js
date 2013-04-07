@@ -4,11 +4,13 @@ var App = {};
 
   App.File = Backbone.Model.extend({
     activate: function () {
-      this.set("active", true);
+      this.active = true;
+      this.trigger("activate", this);
     },
 
     deactivate: function () {
-      this.set("active", false);
+      this.active = false;
+      this.trigger("deactivate", this);
     },
 
     rename: function () {
@@ -30,6 +32,8 @@ var App = {};
 
     initialize: function () {
       this.listenTo(this.model, "change", this.render);
+      this.listenTo(this.model, "activate", this.activate);
+      this.listenTo(this.model, "deactivate", this.deactivate);
       this.model.on("remove", this.remove);
       this.render();
       return this;
@@ -38,8 +42,16 @@ var App = {};
     render: function () {
       this.$el
         .html($('<a href="#" class="name"></a>').append(this.model.get("name")))
-        .toggleClass("active", !!this.model.get("active"));
+        .toggleClass("active", !!this.active);
       return this;
+    },
+
+    activate: function () {
+      this.$el.addClass("active");
+    },
+
+    deactivate: function () {
+      this.$el.removeClass("active");
     }
 
   });
@@ -49,15 +61,13 @@ var App = {};
     model: App.File,
 
     initialize: function () {
-      this.on("change:active", function (model, value) {
-        if (value) {
-          var id = model.id;
-          this.forEach(function (model) {
-            if (model.id != id) {
-              model.deactivate();
-            }
-          });
-        }
+      this.on("activate", function (model) {
+        var id = model.id;
+        this.forEach(function (model) {
+          if (model.id != id) {
+            model.deactivate();
+          }
+        });
       });
     }
 
@@ -109,11 +119,9 @@ var App = {};
     events: {
       "submit form": function (e) {
         e.preventDefault();
-        this.update();
-        this.destroy();
+        this.update().destroy();
       },
       "click .btn-cancel": "destroy"
-
     },
 
     initialize: function () {
@@ -130,12 +138,15 @@ var App = {};
 
     update: function () {
       this.model.set("name", this.$("#file-name").val());
+      return this;
     },
 
     destroy: function () {
+      this.model.deactivate();
       this.undelegateEvents();
       this.$("input, button").attr("disabled", true);
       this.$("#file-name").val("");
+      return this;
     }
 
   });
