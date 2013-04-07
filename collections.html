@@ -4,6 +4,7 @@
 	<title></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="css/collections.css">
 </head>
 <body>
 
@@ -15,7 +16,8 @@
 		<div class="span6">
 			<div id="panel-left"></div>
 			<div>
-				<button class="btn" id="refresh">Refresh</button>
+				<button class="btn" id="refresh-files">Refresh</button>
+				<button class="btn" id="clear-files">Clear</button>
 			</div>
 		</div>
 		<div id="panel-right" class="span6">
@@ -45,6 +47,20 @@
 <script src="lib/underscore.js"></script>
 <script src="lib/backbone.js"></script>
 <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+	if (!localStorage.getItem("files")) {
+		localStorage.setItem("files", JSON.stringify([
+		    {"id": 1, "name": "File 1"},
+		    {"id": 2, "name": "File 2"},
+		    {"id": 2, "name": "File 2"},
+		    {"id": 3, "name": "File 3"},
+		    {"id": 4, "name": "File 4"},
+		    {"id": 5, "name": "File 5"},
+		    {"id": 6, "name": "File 6"}
+		]));
+	}
+</script>
 
 <script src="js/collections.js"></script>
 
