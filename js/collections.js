@@ -82,7 +82,7 @@ var App = {};
     className: "nav nav-tabs nav-stacked",
 
     initialize: function (options) {
-      _.bindAll(this, "addItem");
+      _.bindAll(this, "addItem", "render");
       options.root.html(this.$el);
       return this
         .listenTo(this.collection, "add", this.addItem)
@@ -114,10 +114,7 @@ var App = {};
   App.RenameView = Backbone.View.extend({
 
     events: {
-      "submit form": function (e) {
-        e.preventDefault();
-        this.update().destroy();
-      },
+      "submit form": "update",
       "click .btn-cancel": "destroy"
     },
 
@@ -131,9 +128,10 @@ var App = {};
       return this;
     },
 
-    update: function () {
+    update: function (e) {
+      e.preventDefault();
       this.model.set("name", this.$("#file-name").val());
-      return this;
+      return this.destroy();
     },
 
     destroy: function () {
