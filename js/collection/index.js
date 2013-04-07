@@ -14,9 +14,15 @@ $(function () {
     el: "#panel-right"
   });
 
+  var renameModel;
+
   files.on("activate", function (model) {
 
-    var renameModel = new Backbone.Model(_.clone(model.attributes));
+    if (renameModel && model.id == renameModel.id) {
+      return;
+    }
+
+    renameModel = new Backbone.Model(_.clone(model.attributes));
 
     renameModel.on("change", function (model) {
       files.get(model.id).set(model.attributes).deactivate();
