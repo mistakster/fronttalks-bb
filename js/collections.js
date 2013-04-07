@@ -148,7 +148,6 @@ var App = {};
     },
 
     destroy: function () {
-      this.model.deactivate();
       this.undelegateEvents();
       this.$("input, button").attr("disabled", true);
       this.$("#file-name").val("");
@@ -177,9 +176,16 @@ var App = {};
   });
 
   files.on("activate", function (model) {
+
+    var renameModel = new Backbone.Model(_.clone(model.attributes));
+
+    renameModel.on("change", function (model) {
+      files.get(model.id).set(model.attributes).deactivate();
+    });
+
     renameRegion.show(
       new App.RenameView({
-        model: model
+        model: renameModel
       })
     );
   });
