@@ -7,14 +7,9 @@ var App = {};
       this.active = true;
       return this.trigger("activate", this);
     },
-
     deactivate: function () {
       this.active = false;
       return this.trigger("deactivate", this);
-    },
-
-    rename: function () {
-      this.activate().trigger("rename", this);
     }
   });
 
@@ -25,7 +20,7 @@ var App = {};
     events: {
       "click .name": function (e) {
         e.preventDefault();
-        this.model.rename();
+        this.model.activate();
       }
     },
 
@@ -111,15 +106,31 @@ var App = {};
 
 (function () {
 
+  App.RenameRegion = Backbone.View.extend({
+
+    initialize: function () {
+      this.currentView = null;
+    },
+
+    show: function (view) {
+      if (view != this.currentView) {
+        if (this.currentView && _.isFunction(this.currentView.destroy)) {
+          this.currentView.destroy();
+        }
+        this.currentView = view;
+        view.setElement(this.el);
+        view.render();
+      }
+    }
+
+  });
+
+
   App.RenameView = Backbone.View.extend({
 
     events: {
       "submit form": "update",
       "click .btn-cancel": "destroy"
-    },
-
-    initialize: function () {
-      return this.render();
     },
 
     render: function () {
@@ -159,11 +170,16 @@ var App = {};
     root: $("#panel-left")
   });
 
-  files.on("rename", function (model) {
-    new App.RenameView({
-      model: model,
-      el: "#panel-right"
-    });
+  var renameRegion = new App.RenameRegion({
+    el: "#panel-right"
+  });
+
+  files.on("activate", function (model) {
+    renameRegion.show(
+      new App.RenameView({
+        model: model
+      })
+    );
   });
 
 
