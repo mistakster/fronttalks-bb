@@ -27,26 +27,19 @@ var App = {};
     initialize: function () {
       return this
         .listenTo(this.model, "change", this.render)
-        .listenTo(this.model, "activate", this.activate)
-        .listenTo(this.model, "deactivate", this.deactivate)
+        .listenTo(this.model, "activate", this.renderActive)
+        .listenTo(this.model, "deactivate", this.renderActive)
         .listenTo(this.model, "remove", this.remove)
         .render();
     },
 
     render: function () {
-      this.$el
-        .html($('<a href="#" class="name"></a>').append(this.model.get("name")))
-        .toggleClass("active", !!this.active);
-      return this;
+      this.$el.html($('<a href="#" class="name"></a>').append(this.model.get("name")));
+      return this.renderActive();
     },
 
-    activate: function () {
-      this.$el.addClass("active");
-      return this;
-    },
-
-    deactivate: function () {
-      this.$el.removeClass("active");
+    renderActive: function () {
+      this.$el.toggleClass("active", !!this.model.active);
       return this;
     }
 
