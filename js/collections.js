@@ -5,17 +5,16 @@ var App = {};
   App.File = Backbone.Model.extend({
     activate: function () {
       this.active = true;
-      this.trigger("activate", this);
+      return this.trigger("activate", this);
     },
 
     deactivate: function () {
       this.active = false;
-      this.trigger("deactivate", this);
+      return this.trigger("deactivate", this);
     },
 
     rename: function () {
-      this.activate();
-      this.trigger("rename", this);
+      this.activate().trigger("rename", this);
     }
   });
 
@@ -31,12 +30,12 @@ var App = {};
     },
 
     initialize: function () {
-      this.listenTo(this.model, "change", this.render);
-      this.listenTo(this.model, "activate", this.activate);
-      this.listenTo(this.model, "deactivate", this.deactivate);
-      this.model.on("remove", this.remove);
-      this.render();
-      return this;
+      return this
+        .listenTo(this.model, "change", this.render)
+        .listenTo(this.model, "activate", this.activate)
+        .listenTo(this.model, "deactivate", this.deactivate)
+        .listenTo(this.model, "remove", this.remove)
+        .render();
     },
 
     render: function () {
@@ -48,10 +47,12 @@ var App = {};
 
     activate: function () {
       this.$el.addClass("active");
+      return this;
     },
 
     deactivate: function () {
       this.$el.removeClass("active");
+      return this;
     }
 
   });
@@ -69,6 +70,7 @@ var App = {};
           }
         });
       });
+      return this;
     }
 
   });
@@ -80,17 +82,12 @@ var App = {};
     className: "nav nav-tabs nav-stacked",
 
     initialize: function (options) {
-
-      _.bindAll(this, "addItem", "render");
-
-      this.listenTo(this.collection, "add", this.addItem);
-      this.listenTo(this.collection, "reset", this.render);
-
+      _.bindAll(this, "addItem");
       options.root.html(this.$el);
-
-      this.render();
-
-      return this;
+      return this
+        .listenTo(this.collection, "add", this.addItem)
+        .listenTo(this.collection, "reset", this.render)
+        .render();
     },
 
     render: function () {
@@ -125,9 +122,7 @@ var App = {};
     },
 
     initialize: function () {
-      _.bindAll(this, "render", "destroy");
-      this.render();
-      return this;
+      return this.render();
     },
 
     render: function () {
