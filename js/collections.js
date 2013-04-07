@@ -81,12 +81,12 @@ var App = {};
       options.root.html(this.$el);
       return this
         .listenTo(this.collection, "add", this.addItem)
-        .listenTo(this.collection, "reset", this.render)
+        .listenTo(this.collection, "reset", this.resetItems)
         .render();
     },
 
     render: function () {
-      this.$el.empty();
+      this.$el.empty(); // just for sure
       this.collection.forEach(this.addItem);
       return this;
     },
@@ -97,6 +97,15 @@ var App = {};
       });
       this.$el.append(itemView.$el);
       return this;
+    },
+
+    resetItems: function (collection, options) {
+      if (options.previousModels) {
+        _.forEach(options.previousModels, function (model) {
+          model.trigger("remove");
+        });
+      }
+      this.render();
     }
 
   });
@@ -181,7 +190,6 @@ var App = {};
       })
     );
   });
-
 
 
   $("#refresh-files").on("click", function () {
