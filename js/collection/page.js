@@ -25,7 +25,12 @@ $(function () {
     renameModel = new Backbone.Model(_.clone(model.attributes));
 
     renameModel.on("change", function (model) {
-      files.get(model.id).set(model.attributes).deactivate();
+      files.get(model.id).set(model.attributes);
+    });
+
+    renameModel.on("destroy", function (model) {
+      files.get(model.id).deactivate();
+      renameModel = null;
     });
 
     renameRegion.show(

@@ -40,6 +40,7 @@
     },
 
     destroy: function () {
+      this.model.trigger("destroy", this.model);
       this.undelegateEvents();
       this.$("input, button").attr("disabled", true);
       this.$("#file-name").val("");
