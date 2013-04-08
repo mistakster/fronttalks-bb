@@ -5,13 +5,19 @@
     model: App.File,
 
     initialize: function () {
+      var collection = this;
       this.on("activate", function (model) {
-        var id = model.id;
+        var id = collection.lastActiveId = model.id;
         this.forEach(function (model) {
           if (model.id != id) {
             model.deactivate();
           }
         });
+      });
+      this.on("deactivate", function (model) {
+        if (this.lastActiveId == model.id) {
+          this.lastActiveId = null;
+        }
       });
       return this;
     }
@@ -43,6 +49,9 @@
       var itemView = new App.FileView({
         model: model
       });
+      if (this.collection.lastActiveId == model.id) {
+        model.activate();
+      }
       this.$el.append(itemView.$el);
       return this;
     },
