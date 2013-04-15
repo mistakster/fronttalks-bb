@@ -28,7 +28,7 @@ $(function () {
       files.get(model.id).set(model.attributes);
     });
 
-    renameModel.on("destroy", function (model) {
+    renameModel.on("kill", function (model) {
       files.get(model.id).deactivate();
       renameModel = null;
     });

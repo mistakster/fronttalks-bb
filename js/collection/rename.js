@@ -8,8 +8,8 @@
 
     show: function (view) {
       if (view != this.currentView) {
-        if (this.currentView && _.isFunction(this.currentView.destroy)) {
-          this.currentView.destroy();
+        if (this.currentView && _.isFunction(this.currentView.kill)) {
+          this.currentView.kill();
         }
         this.currentView = view;
         view.setElement(this.el);
@@ -24,7 +24,7 @@
 
     events: {
       "submit form": "update",
-      "click .btn-cancel": "destroy"
+      "click .btn-cancel": "kill"
     },
 
     render: function () {
@@ -36,11 +36,11 @@
     update: function (e) {
       e.preventDefault();
       this.model.set("name", this.$("#file-name").val());
-      return this.destroy();
+      return this.kill();
     },
 
-    destroy: function () {
-      this.model.trigger("destroy", this.model);
+    kill: function () {
+      this.model.trigger("kill", this.model);
       this.undelegateEvents();
       this.$("input, button").attr("disabled", true);
       this.$("#file-name").val("");
