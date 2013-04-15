@@ -34,7 +34,7 @@
     },
 
     getTemplate: function () {
-      return _.template('<h1><%- head %></h1><div><%- text %></div>');
+      return _.template('<h2><%- head %></h2><div><%- text %></div>');
     }
 
   });
@@ -48,10 +48,12 @@
     },
 
     getTemplate: function () {
-      return _.template('<strong><%- user %></strong> <%' +
+      return _.template('<% if (action == "like") { %><i class="icon-heart"></i> <% } %>' +
+        '<strong><%- user %></strong> <%' +
         'if (action == "like") { print("likes your post"); }' +
         'else if (action == "unfollow") { print("is not follow you anymore"); }' +
-        'else { print("makes unknown action with you"); } %>');
+        'else { print("makes unknown action with you"); }' +
+        '%>');
     }
 
   });
