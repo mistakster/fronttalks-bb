@@ -62,12 +62,19 @@
 
     className: getClassName("reply"),
 
+    events: {
+      "click .item__reply": function () {
+        alert("reply to item #" + this.model.id);
+      }
+    },
+
     initialize: function () {
       App.ItemView.prototype.initialize.apply(this, arguments);
     },
 
     getTemplate: function () {
-      return _.template('<strong><%- user %></strong><div><%- text %></div>');
+      return _.template('<span class="pull-right btn item__reply">Reply</span> ' +
+        '<strong><%- user %></strong><div><%- text %></div>');
     }
 
   });
