@@ -48,15 +48,35 @@
     },
 
     getTemplate: function () {
-      return _.template('<% if (action == "like") { %><i class="icon-heart"></i> <% } %>' +
-        '<strong><%- user %></strong> <%' +
-        'if (action == "like") { print("likes your post"); }' +
-        'else if (action == "unfollow") { print("is not follow you anymore"); }' +
-        'else { print("makes unknown action with you"); }' +
-        '%>');
+      return _.template('<strong><%- user %></strong> makes unknown action on you');
     }
 
   });
+
+  App.ItemActionLikeView = App.ItemActionView.extend({
+
+    initialize: function () {
+      App.ItemActionView.prototype.initialize.apply(this, arguments);
+    },
+
+    getTemplate: function () {
+      return _.template('<i class="icon-heart"></i> <strong><%- user %></strong> likes your post');
+    }
+
+  });
+
+  App.ItemActionUnfollowView = App.ItemActionView.extend({
+
+    initialize: function () {
+      App.ItemActionView.prototype.initialize.apply(this, arguments);
+    },
+
+    getTemplate: function () {
+      return _.template('<strong><%- user %></strong> is not follow you anymore');
+    }
+
+  });
+
 
   App.ItemMessageView = App.ItemView.extend({
 
@@ -87,7 +107,16 @@
     {
       0: App.ItemView,
       "news": App.ItemNewsView,
-      "action": App.ItemActionView,
+      "action": App.Factory(
+        function (options) {
+          return options.model.get("action");
+        },
+        {
+          0: App.ItemActionView,
+          "like": App.ItemActionLikeView,
+          "unfollow": App.ItemActionUnfollowView
+        }
+      ),
       "message": App.ItemMessageView
     }
   );
