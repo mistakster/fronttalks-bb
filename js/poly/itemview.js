@@ -5,8 +5,6 @@
     className: "item",
 
     initialize: function () {
-      console.log("initialize view for generic item");
-      this.render();
     },
 
     getTemplate: function () {
@@ -32,7 +30,6 @@
     className: getClassName("news"),
 
     initialize: function () {
-      console.log("initialize view for news");
       App.ItemView.prototype.initialize.apply(this, arguments);
     },
 
@@ -47,7 +44,6 @@
     className: getClassName("action"),
 
     initialize: function () {
-      console.log("initialize view for action");
       App.ItemView.prototype.initialize.apply(this, arguments);
     },
 
@@ -65,7 +61,6 @@
     className: getClassName("reply"),
 
     initialize: function () {
-      console.log("initialize view for reply");
       App.ItemView.prototype.initialize.apply(this, arguments);
     },
 

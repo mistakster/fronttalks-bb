@@ -8,7 +8,7 @@ $(function () {
     var view = App.ItemViewFactory.createItemView({
       model: model
     });
-    $("#list").append(view.$el);
+    $("#list").append(view.render().$el);
   });
 
 
