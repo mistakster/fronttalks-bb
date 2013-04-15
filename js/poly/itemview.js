@@ -80,27 +80,16 @@
   });
 
 
-
-  var F = App.ItemViewFactory = function () {
-    return F.createItemView.apply(this, arguments);
-  };
-
-  F.createItemView = function (options) {
-    var ctor;
-    switch (options.model.get("type")) {
-      case 'news':
-        ctor = App.ItemNewsView;
-        break;
-      case 'action':
-        ctor = App.ItemActionView;
-        break;
-      case 'message':
-        ctor = App.ItemMessageView;
-        break;
-      default:
-        ctor = App.ItemView;
+  App.ItemViewFactory = App.Factory(
+    function (options) {
+      return options.model.get("type");
+    },
+    {
+      0: App.ItemView,
+      "news": App.ItemNewsView,
+      "action": App.ItemActionView,
+      "message": App.ItemMessageView
     }
-    return new ctor(options);
-  };
+  );
 
 }(Backbone));

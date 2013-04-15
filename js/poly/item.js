@@ -25,27 +25,16 @@
   });
 
 
-
-  var F = App.ItemFactory = function () {
-    return F.createItem.apply(this, arguments);
-  };
-
-  F.createItem = function (attributes, options) {
-    var ctor;
-    switch (attributes.type) {
-      case 'news':
-        ctor = App.ItemNews;
-        break;
-      case 'action':
-        ctor = App.ItemAction;
-        break;
-      case 'message':
-        ctor = App.ItemMessage;
-        break;
-      default:
-        ctor = App.Item;
+  App.ItemFactory = App.Factory(
+    function (attributes) {
+      return attributes.type;
+    },
+    {
+      0: App.Item,
+      "news": App.ItemNews,
+      "action": App.ItemAction,
+      "message": App.ItemMessage
     }
-    return new ctor(attributes, options);
-  };
+  );
 
 }(Backbone));
