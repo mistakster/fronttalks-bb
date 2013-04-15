@@ -35,7 +35,7 @@ App.Data = function () {
     },
     {
       "id": 201,
-      "type": "reply",
+      "type": "message",
       "user": "Brandon Holt",
       "text": "Great stories! Keep writing."
     },

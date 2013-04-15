@@ -58,9 +58,9 @@
 
   });
 
-  App.ItemReplyView = App.ItemView.extend({
+  App.ItemMessageView = App.ItemView.extend({
 
-    className: getClassName("reply"),
+    className: getClassName("message"),
 
     events: {
       "click .item__reply": function () {
@@ -94,8 +94,8 @@
       case 'action':
         ctor = App.ItemActionView;
         break;
-      case 'reply':
-        ctor = App.ItemReplyView;
+      case 'message':
+        ctor = App.ItemMessageView;
         break;
       default:
         ctor = App.ItemView;

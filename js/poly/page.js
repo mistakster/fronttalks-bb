@@ -11,19 +11,4 @@ $(function () {
     $("#list").append(view.render().$el);
   });
 
-
-
-  /*
-  items.forEach(function (model) {
-    console.log([
-      model instanceof App.Item,
-      model instanceof App.ItemNews,
-      model instanceof App.ItemAction,
-      model instanceof App.ItemReply
-    ]);
-  });
-  */
-
-
-
 });

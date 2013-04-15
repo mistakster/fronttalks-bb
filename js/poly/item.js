@@ -18,9 +18,9 @@
     }
   });
 
-  App.ItemReply = App.Item.extend({
+  App.ItemMessage = App.Item.extend({
     initialize: function () {
-      console.log("initialize for reply");
+      console.log("initialize for message");
     }
   });
 
@@ -39,8 +39,8 @@
       case 'action':
         ctor = App.ItemAction;
         break;
-      case 'reply':
-        ctor = App.ItemReply;
+      case 'message':
+        ctor = App.ItemMessage;
         break;
       default:
         ctor = App.Item;
