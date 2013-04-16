@@ -36,8 +36,8 @@ App.Data = function () {
     {
       "id": 201,
       "type": "message",
-      "user": "Brandon Holt",
-      "text": "Great stories! Keep writing."
+      "user": "Brad Pitt",
+      "text": "Drop me a line if you'd like to talk about me :)"
     },
     {
       "id": 3,

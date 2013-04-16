@@ -15,3 +15,7 @@
 .item_type_message {
 	background: #e0e0ff;
 }
+.item__user {
+	text-decoration: underline;
+	font-weight: bold;
+}

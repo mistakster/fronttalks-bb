@@ -36,19 +36,19 @@
   App.ItemActionView = App.ItemView.extend({
     className: getClassName("action"),
     getTemplate: function () {
-      return _.template('<strong><%- user %></strong> makes unknown action on you');
+      return _.template('<a class="item__user" href="#"><%- user %></a> makes unknown action on you');
     }
   });
 
   App.ItemActionLikeView = App.ItemActionView.extend({
     getTemplate: function () {
-      return _.template('<i class="icon-heart"></i> <strong><%- user %></strong> likes your post');
+      return _.template('<i class="icon-heart"></i> <a class="item__user" href="#"><%- user %></a> likes your post');
     }
   });
 
   App.ItemActionUnfollowView = App.ItemActionView.extend({
     getTemplate: function () {
-      return _.template('<strong><%- user %></strong> is not follow you anymore');
+      return _.template('<a class="item__user" href="#"><%- user %></a> is not follow you anymore');
     }
   });
 
@@ -62,7 +62,7 @@
     },
     getTemplate: function () {
       return _.template('<span class="pull-right btn item__reply">Reply</span> ' +
-        '<strong><%- user %></strong><div><%- text %></div>');
+        '<div><a class="item__user" href="#"><%- user %></a></div><div><%= text %></div>');
     }
   });
 
