@@ -105,20 +105,20 @@
       return options.model.get("type");
     },
     {
-      0: App.ItemView,
       "news": App.ItemNewsView,
       "action": App.Factory(
         function (options) {
           return options.model.get("action");
         },
         {
-          0: App.ItemActionView,
           "like": App.ItemActionLikeView,
           "unfollow": App.ItemActionUnfollowView
-        }
+        },
+        App.ItemActionView
       ),
       "message": App.ItemMessageView
-    }
+    },
+    App.ItemView
   );
 
 }(Backbone));

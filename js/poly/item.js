@@ -30,11 +30,11 @@
       return attributes.type;
     },
     {
-      0: App.Item,
       "news": App.ItemNews,
       "action": App.ItemAction,
       "message": App.ItemMessage
-    }
+    },
+    App.Item
   );
 
 }(Backbone));
