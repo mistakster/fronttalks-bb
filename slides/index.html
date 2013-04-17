@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<title>Backbone. Шашлык на косточке</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=792, user-scalable=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<link rel="stylesheet" href="styles/screen.css">
+</head>
+<body class="list">
+	<header class="caption">
+		<h1>Backbone. Шашлык на косточке</h1>
+		<p>Владимир Кузнецов</p>
+	</header>
+	<section class="slide shout"><div>
+		<h2>Backbone.<br>Шашлык на косточке</h2>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Backbone</h2>
+		<ul>
+			<li>Нужно уметь готовить</li>
+			<li class="next">Подходит далеко не для всех задач</li>
+			<li class="next"><strong>Предоставляет замечательную инфраструкуру</strong></li>
+			<li class="next"><strong>Вызывает привыкание и даже зависимость</strong></li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Массивы разнотипных объектов</h2>
+		<p>Нет типизации — можно хранить любые объекты вперемешку</p>
+		<pre>
+			<code>var list = [</code>
+			<code>  {a: 1, b: 2},</code>
+			<code>  42,</code>
+			<code>  &quot;test&quot;</code>
+			<code>];</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Backbone.Collection</h2>
+		<p>В коллекции тоже можно хранить модели любых типов</p>
+		<pre>
+			<code>var c = new Backbone.Collection();</code>
+			<code>c.add(new App.ItemMessage());</code>
+			<code>c.add(new App.ItemNews());</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Backbone.Collection</h2>
+		<p>Если в коллекцию добавляется простой объект, то для него создаётся модель (по-умолчанию это <code>Backbone.Model</code>)</p>
+		<pre>
+			<code>var c = new Backbone.Collection({</code>
+			<code>  <mark class="important">model</mark>: App.Item</code>
+			<code>});</code>
+		</pre>
+	</div></section>
+	<section class="slide cover h"><div>
+		<img src="i/twitter-interactions.png">
+	</div></section>
+	<section class="slide"><div>
+		<h2>Полиморфизм</h2>
+		<p>«Один интерфейс, множество реализаций»</p>
+		<ul>
+			<li>Эквивалентный набор методов с одинаковыми именами</li>
+			<li>Функциональность методов может быть изменена</li>
+		</ul>
+		<p class="next">Фактически реализуется наследованием</p>
+	</div></section>
+	<section class="slide cover h">
+		<img src="i/timeline.png">
+	</section>
+	<section class="slide"><div>
+		<pre>
+			<code>App.Item = <mark>Backbone.Model</mark>.extend({});</code>
+			<code>App.ItemNews = <mark>App.Item</mark>.extend({});</code>
+			<code>App.ItemAction = <mark>App.Item</mark>.extend({});</code>
+			<code>App.ItemMessage = <mark>App.Item</mark>.extend({});</code>
+		</pre>
+		<p class="next">А какой класс передавать в конструктор коллекции?</p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Способы создания экземпляров класса</h2>
+		<p><strong>Оператор <code>new</code></strong></p>
+		<pre>
+			<code>var item = new App.Item();</code>
+			<code>var itemNews = new App.ItemNews();</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Способы создания экземпляров класса</h2>
+		<p><strong>Фабричный метод</strong></p>
+		<p>Используется, когда классу заранее неизвестно, объекты каких подклассов ему нужно создавать.</p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабричный метод</h2>
+		<pre>
+			<code>var item = App.ItemFactory.create(</code>
+			<code>  <mark>&quot;give me an item, please&quot;</mark></code>
+			<code>);</code>
+			<code>var itemNews = App.ItemFactory.create(</code>
+			<code>  <mark>&quot;one more item with type of news&quot;</mark></code>
+			<code>);</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабричный метод</h2>
+		<pre>
+			<code>var item = App.ItemFactory.create({</code>
+			<code>  id: 10,</code>
+			<code>  type: <mark>&quot;news&quot;</mark>,</code>
+			<code>  text: &quot;Beckham to donate PSG pay to charity&quot;</code>
+			<code>});</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабричный метод</h2>
+		<p>Ну не писать же для каждого типа сущностей свою фабрику.</p>
+		<p>Напишем фабрику фабрик!</p>
+		<p class="next">Страшно звучит?</p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабрика фабрик</h2>
+		<pre>
+			<code>App.Factory = function (getter, hash, def) {</code>
+			<code>  return function () {</code>
+			<code>    var value = getter.apply(this, arguments);</code>
+			<code>    var ctor = hash[value] ? hash[value] : def;</code>
+			<code>    return new ctor(arguments[0], arguments[1]);</code>
+			<code>  };</code>
+            <code>};</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<pre>
+			<code>App.ItemFactory = App.Factory(</code>
+			<code>  function (attr) { return attr.type; },</code>
+			<code>  {</code>
+			<code>    &quot;news&quot;: App.ItemNews,</code>
+			<code>    &quot;action&quot;: App.ItemAction,</code>
+			<code>    &quot;message&quot;: App.ItemMessage</code>
+		    <code>  },</code>
+			<code>  App.Item</code>
+			<code>);</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабрика — это конструктор,<br>только лучше</h2>
+		<pre>
+			<code>var item = new App.ItemFactory();</code>
+			<code>var itemNews = App.ItemFactory({</code>
+			<code>  type: &quot;news&quot;</code>
+			<code>});</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Фабрику можно передать в качестве<br>конструктора</h2>
+		<pre>
+			<code>App.Items = Backbone.Collection.extend({</code>
+    		<code>  model: App.ItemFactory</code>
+  			<code>});</code>
+		</pre>
+		<p>Коллекция будет автоматически заполняться объектами нужного типа. <strong>PROFIT!</strong></p>
+	</div></section>
+	<section class="slide"><div>
+		<p>Фабрику можно использовать и для создания экземпляров <code>Backbone.View</code></p>
+		<pre>
+			<code>App.ItemViewFactory = App.Factory(</code>
+			<code>  function (options) {</code>
+			<code>    return options.model.get(&quot;type&quot;);</code>
+			<code>  },</code>
+			<code>  &hellip;</code>
+			<code>);</code>
+		</pre>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Почему бы не использовать<br>if &hellip; then &hellip; else?</h2>
+		<p>Потому что ифы — зло!<br>
+			<a href="http://www.youtube.com/watch?v=4F72VULWFvc" target="_blank">The Clean Code Talks —
+				Inheritance, Polymorphism &amp; Testing</a></p>
+		<p>Особенно актуально для шаблонов. Подобное «программирование» можно смело вынести в тестируемый JS-код.</p>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Заключение</h2>
+		<ul>
+			<li>узнали, что в коллекциях можно хранить разнотипные объекты</li>
+			<li>разобрались как работают конструкторы</li>
+			<li>научились создавать экземпляры нужного класса</li>
+		</ul>
+	</div></section>
+	<section class="slide"><div>
+		<h2>Спасибо за внимание!</h2>
+		<p><strong>Владимир Кузнецов</strong></p>
+		<p><strong>Твиттер:</strong> @mista_k<br/>
+			<strong>Почта:</strong> mistakster@gmail.com</p>
+	</div></section>
+	<!--
+		To hide progress bar from entire presentation
+		just remove “progress” element.
+		-->
+	<div class="progress"><div></div></div>
+	<script src="scripts/shower.js"></script>
+	<!-- Copyright © 2013 Yours Truly, Famous Inc. -->
+</body>
+</html>
