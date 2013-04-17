@@ -73,9 +73,16 @@
 			<code>App.Item = <mark>Backbone.Model</mark>.extend({});</code>
 			<code>App.ItemNews = <mark>App.Item</mark>.extend({});</code>
 			<code>App.ItemAction = <mark>App.Item</mark>.extend({});</code>
-			<code>App.ItemMessage = <mark>App.Item</mark>.extend({});</code>
+			<!--<code>App.ItemMessage = <mark>App.Item</mark>.extend({});</code>-->
 		</pre>
-		<p class="next">А какой класс передавать в конструктор коллекции?</p>
+		<div class="next">
+			<p>А какой класс передавать в конструктор коллекции?</p>
+			<pre>
+				<code>App.Items = Backbone.Collection.extend({</code>
+				<code>  model: <mark class="important">WHAT???</mark></code>
+				<code>});</code>
+			</pre>
+		</div>
 	</div></section>
 	<section class="slide"><div>
 		<h2>Способы создания экземпляров класса</h2>
@@ -94,17 +101,17 @@
 		<h2>Фабричный метод</h2>
 		<pre>
 			<code>var item = App.ItemFactory.create(</code>
-			<code>  <mark>&quot;give me an item, please&quot;</mark></code>
+			<code>  <mark>&quot;Could you give me an item&quot;</mark></code>
 			<code>);</code>
 			<code>var itemNews = App.ItemFactory.create(</code>
-			<code>  <mark>&quot;one more item with type of news&quot;</mark></code>
+			<code>  <mark>&quot;One more item with type of news, please&quot;</mark></code>
 			<code>);</code>
 		</pre>
 	</div></section>
 	<section class="slide"><div>
 		<h2>Фабричный метод</h2>
 		<pre>
-			<code>var item = App.ItemFactory.create({</code>
+			<code>var itemNews = App.ItemFactory.create({</code>
 			<code>  id: 10,</code>
 			<code>  type: <mark>&quot;news&quot;</mark>,</code>
 			<code>  text: &quot;Beckham to donate PSG pay to charity&quot;</code>
