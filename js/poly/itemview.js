@@ -34,7 +34,10 @@
 
 
   App.ItemActionView = App.ItemView.extend({
-    className: getClassName("action"),
+    className: function getActionClassName() {
+      var action = this.model.get("action");
+      return [getClassName("action"), "item-action", action ? "item-action_" + action : ""].join(" ");
+    },
     getTemplate: function () {
       return _.template('<a class="item__user" href="#"><%- user %></a> makes unknown action on you');
     }
