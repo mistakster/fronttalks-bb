@@ -101,22 +101,23 @@
 		<h2>Способы создания экземпляров класса</h2>
 		<p><strong>Фабричный метод</strong></p>
 		<p>Используется, когда классу заранее неизвестно, объекты каких подклассов ему нужно создавать.</p>
+		<p>Статический метод класса.</p>
 	</div></section>
 	<section class="slide"><div>
 		<h2>Фабричный метод</h2>
 		<pre>
-			<code>var item = App.ItemFactory.create(</code>
+			<code>var item = App.Item.create(</code>
 			<code>  <mark>&quot;Could you give me an item&quot;</mark></code>
 			<code>);</code>
-			<code>var itemNews = App.ItemFactory.create(</code>
-			<code>  <mark>&quot;One more item with type of news, please&quot;</mark></code>
+			<code>var itemNews = App.Item.create(</code>
+			<code>  <mark>&quot;One more item of type of news, please&quot;</mark></code>
 			<code>);</code>
 		</pre>
 	</div></section>
 	<section class="slide"><div>
 		<h2>Фабричный метод</h2>
 		<pre>
-			<code>var itemNews = App.ItemFactory.create({</code>
+			<code>var itemNews = App.Item.create({</code>
 			<code>  id: 10,</code>
 			<code>  type: <mark>&quot;news&quot;</mark>,</code>
 			<code>  text: &quot;Beckham to donate PSG pay to charity&quot;</code>
