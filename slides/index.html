@@ -158,9 +158,11 @@
 	<section class="slide"><div>
 		<h2>Фабрика — это конструктор,<br>только лучше</h2>
 		<pre>
-			<code>var item = new App.ItemFactory();</code>
+			<code>var item = <mark>new</mark> App.ItemFactory({</code>
+			<code>});</code>
 			<code>var itemNews = App.ItemFactory({</code>
-			<code>  type: &quot;news&quot;</code>
+			<code>  type: &quot;news&quot;,</code>
+			<code>  text: &quot;Prisoners running disco in Venezuela&quot;</code>
 			<code>});</code>
 		</pre>
 	</div></section>
